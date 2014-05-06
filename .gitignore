@@ -1,0 +1,10 @@
+nbproject/
+data/
+data.inactive/
+target/
+dist/
+nbproject/private/
+build/
+lib/*.jar
+*.jar
+/tags
