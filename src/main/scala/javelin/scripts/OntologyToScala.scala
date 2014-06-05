@@ -26,6 +26,7 @@ import com.hp.hpl.jena.vocabulary.{ RDF, RDFS, OWL }
 
 import org.foment.utils.Exceptions._
 import javelin.OntologyLoader
+import javelin.ontology.Implicits._
 
 object OntologyToScala {
 
@@ -60,9 +61,9 @@ object OntologyToScala {
             val content = ontology.model.listStatements.toList
                 .groupBy { _.getSubject.getURI }
                 .filter { _._1 != null }
+                .filter { _._1 startsWith namespace }
                 .map     {
                     (statement) =>
-                        println (getValue(statement._2, RDF.`type`))
                     (   // returning the subject
                         statement._1 substring namespace.length,
 
@@ -78,13 +79,12 @@ object OntologyToScala {
                         }
                     )
                 }
-                .filter  { _._2 != null }
                 .map     { item =>
                    s"""|    /**
                        |     * ${item._2} (${item._4})
-                       |     * ${item._3}
+                       |     * ${item._3.replace("\n", "\n     * ")}
                        |     */
-                       |    lazy val ${item._1} = NS ${if (item._4 != "property") "##" else "#>"} "${item._1}"
+                       |    lazy val `${item._1}` = NS ${if (item._4 != "property") "##" else "#>"} "${item._1}"
                        |
                        |""".stripMargin
                 }
@@ -127,11 +127,13 @@ object OntologyToScala {
            |""".stripMargin
 
     private
-    def getValue(statements: Buffer[Statement], property: Property): String =
+    def getValue(statements: Buffer[Statement], property: Property): String = {
+        println("getValue: " + property.toString)
         statements
             .filter     { _.getPredicate == property }
             .map        { _.getObject.toString }
-            .headOption
-            .getOrElse  { null }
-
+            .mkString("\n")
+            // .headOption
+            // .getOrElse  { null }
+    }
 }

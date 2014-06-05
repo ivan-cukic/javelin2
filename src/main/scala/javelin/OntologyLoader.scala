@@ -28,7 +28,7 @@ import org.foment.utils.Filesystem._
 import org.foment.utils.Exceptions._
 
 import javelin.ontology.Javelin
-import Implicits._
+import javelin.ontology.Implicits._
 
 object OntologyLoader {
 
