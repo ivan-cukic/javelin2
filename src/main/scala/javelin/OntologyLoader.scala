@@ -27,7 +27,9 @@ import com.hp.hpl.jena.vocabulary.{ RDFS, RDF }
 import org.foment.utils.Filesystem._
 import org.foment.utils.Exceptions._
 
-import javelin.ontology.Javelin
+import nepomuk.ontology.NIE
+import nepomuk.ontology.NAO
+import nepomuk.ontology.NRL
 import javelin.ontology.Implicits._
 
 object OntologyLoader {
@@ -59,11 +61,11 @@ object OntologyLoader {
 
         // Adding the ontology meta-data to the model
         model.createResource(ontology.namespace + "metadata") ++= Seq(
-            RDFS.label                       % ontology.label
-          , RDFS.comment                     % ontology.comment
-          , RDF.`type`                       % Javelin.Ontology
-          , Javelin.hasNamespace             % ontology.namespace
-          , Javelin.hasNamespaceAbbreviation % ontology.abbreviation
+            RDFS.label                          % ontology.label
+          , RDFS.comment                        % ontology.comment
+          , RDF.`type`                          % NRL.Ontology
+          , NAO.hasDefaultNamespace             % ontology.namespace
+          , NAO.hasDefaultNamespaceAbbreviation % ontology.abbreviation
         )
 
         // Returning the ontology

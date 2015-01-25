@@ -1,8 +1,8 @@
 name := "Javelin"
 
-version := "1.1"
+version := "1.3"
 
-scalaVersion := "2.10.1"
+scalaVersion := "2.10.3"
 
 organization := "ivan"
 
@@ -19,8 +19,8 @@ resolvers += "litef nightlies" at "https://raw.githubusercontent.com/ivan-cukic/
 libraryDependencies ++= Seq (
     "org.apache.jena"    % "jena-arq" % "2.11.1" exclude("org.slf4j", "slf4j-log4j12")
   , "org.apache.commons" % "commons-io" % "1.3.2"
-  , "ivan" %% "javelin-ontologies" % "1.1"
-  , "ivan" %% "scala-utils" % "1.1"
+  , "ivan" %% "javelin-ontologies" % "1.3"
+  , "ivan" %% "scala-utils" % "1.2"
 )
 
 mainClass := Some("javelin.Main")
